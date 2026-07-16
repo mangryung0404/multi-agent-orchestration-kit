@@ -1,0 +1,4 @@
+# Paid product content - distributed via Gumroad only, never pushed
+product/
+.marketing/
+dist/

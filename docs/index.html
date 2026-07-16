@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multi-Agent Orchestration Kit: file-based orchestration for CLI coding agents</title>
+<meta name="description" content="Run one CLI coding agent as an orchestrator over a pool of workers across vendors, with plain markdown files as shared memory. Free templates plus a playbook extracted from months of daily use.">
+<meta property="og:title" content="Multi-Agent Orchestration Kit">
+<meta property="og:description" content="Run CLI coding agents as one system: orchestrator + worker pool, plain markdown as shared memory. Free MIT templates.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mangryung0404.github.io/multi-agent-orchestration-kit/">
+<meta property="og:image" content="https://mangryung0404.github.io/multi-agent-orchestration-kit/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{
+  --bg:#ffffff;--fg:#1a1d21;--muted:#5b626b;--line:#e4e7ea;--card:#f6f8f9;
+  --accent:#0b6e4f;--accent-fg:#ffffff;--code:#f0f2f4;
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#101316;--fg:#e8eaec;--muted:#9aa3ab;--line:#262b30;--card:#171c20;
+  --accent:#2fa77c;--accent-fg:#0c110e;--code:#1c2226;
+}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+header{padding:72px 0 48px;text-align:left}
+h1{font-size:2.1rem;line-height:1.2;letter-spacing:-.02em;margin-bottom:14px}
+.sub{font-size:1.15rem;color:var(--muted);max-width:620px}
+.ctas{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.btn{display:inline-block;padding:11px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.97rem;border:1px solid var(--line)}
+.btn.primary{background:var(--accent);color:var(--accent-fg);border-color:transparent}
+.btn.ghost{color:var(--fg)}
+.btn:hover{opacity:.88}
+section{padding:36px 0;border-top:1px solid var(--line)}
+h2{font-size:1.35rem;letter-spacing:-.01em;margin-bottom:18px}
+p{margin-bottom:14px}
+p.dim,li.dim{color:var(--muted)}
+ul.pain{list-style:none}
+ul.pain li{padding:10px 0 10px 30px;position:relative}
+ul.pain li::before{content:"✕";position:absolute;left:4px;color:var(--accent);font-weight:700}
+pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:16px;overflow-x:auto;font-size:.85rem;line-height:1.5;margin:16px 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.95rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+td:first-child{white-space:nowrap;font-weight:600}
+.check{color:var(--accent);font-weight:700}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+@media(max-width:640px){.cards{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px}
+.card h3{font-size:1.05rem;margin-bottom:6px}
+.card .price{font-size:1.5rem;font-weight:700;margin:10px 0 4px}
+.card .was{color:var(--muted);text-decoration:line-through;font-size:.95rem;font-weight:400}
+.card ul{margin:12px 0 18px 18px;font-size:.93rem}
+.card li{margin-bottom:6px}
+.qa{margin-bottom:18px}
+.qa b{display:block;margin-bottom:4px}
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+footer a{color:var(--muted)}
+.tbl-scroll{overflow-x:auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Run your CLI coding agents as one system, not a pile of tabs.</h1>
+  <p class="sub">One interactive agent orchestrates. Headless workers across vendors execute. Plain markdown files are the shared memory that survives every dead session. No framework, no server. Five templates and a discipline.</p>
+  <div class="ctas">
+    <a class="btn primary" href="https://mangryung0404.gumroad.com/l/orchestration-playbook">Get the Playbook ($19)</a>
+    <a class="btn ghost" href="https://github.com/mangryung0404/multi-agent-orchestration-kit">Free templates on GitHub</a>
+  </div>
+</header>
+
+<section>
+  <h2>If you run more than one agent, you know these</h2>
+  <ul class="pain">
+    <li>A session dies mid-task and the next one starts from zero, re-deriving everything.</li>
+    <li>Worker output looked plausible, got merged, and was confidently wrong.</li>
+    <li>Claude can't see what Codex knows; Codex can't see what Gemini reviewed. Neither can you, three days later.</li>
+    <li>You paid three times for the same research because nobody remembered it was done.</li>
+  </ul>
+  <p class="dim">The fix is boring on purpose: every task is a folder every tool can read, hard size caps keep agents attentive, an append-only log survives every crash, and no worker output is accepted without a verification pass.</p>
+</section>
+
+<section>
+  <h2>The shape of it</h2>
+<pre><code>Orchestrator (your interactive session: thinks, routes, verifies)
+└── Worker Pool (headless, each call approved)
+    ├── implementer   main build work
+    ├── critic        adversarial review (read-only, other vendor)
+    └── researcher    external facts
+
+tasks/&lt;task-name&gt;/
+├── task.md        goal, status, approvals     (the contract)
+├── context.md     snapshot of NOW, ≤300 words (the state)
+├── log.md         append-only, tagged         (the truth)
+└── workers/&lt;role&gt;/brief.md + result.md       (the calls)</code></pre>
+  <p>Works with Claude Code, Codex CLI, Gemini CLI, and local models: the orchestrator is whatever you drive by hand, workers are whatever you can call headlessly. Extracted from a system I run daily on real projects.</p>
+</section>
+
+<section>
+  <h2>Free kit vs. the Playbook</h2>
+  <div class="tbl-scroll">
+  <table>
+    <tr><th></th><th>Free kit</th><th>Playbook</th></tr>
+    <tr><td>5 markdown templates</td><td class="check">✓</td><td class="check">✓ included</td></tr>
+    <tr><td>Method overview (10 min)</td><td class="check">✓</td><td class="check">✓</td></tr>
+    <tr><td>Re-entry protocol</td><td>—</td><td class="check">✓ full decision tree, status-vs-log rule, hang detection</td></tr>
+    <tr><td>Self-routing triggers</td><td>—</td><td class="check">✓ action-anchored checkpoints (confidence is the signal that fails)</td></tr>
+    <tr><td>Deliberation tiers</td><td>—</td><td class="check">✓ Light/Standard/Deep, CLAIM→EVIDENCE→VERDICT, hard 3-round cap</td></tr>
+    <tr><td>Degraded operation</td><td>—</td><td class="check">✓ fallback ladders, free-tier privacy gate, reroute conditions</td></tr>
+    <tr><td>Failure-mode chapter</td><td>—</td><td class="check">✓ 8 real incidents, with the rule each one produced</td></tr>
+    <tr><td>Worked examples</td><td>—</td><td class="check">✓ two, with the key files at every step</td></tr>
+    <tr><td>Reference system files + wiring</td><td>—</td><td class="check">✓ complete rules-file example, per-vendor invocations, hang-triage table</td></tr>
+    <tr><td>Operational checklists</td><td>—</td><td class="check">✓ 7 printable one-pagers</td></tr>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>Get it</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>Free Kit</h3>
+      <div class="price">$0</div>
+      <ul>
+        <li>All five templates, MIT licensed</li>
+        <li>The method in ten minutes</li>
+        <li>Use commercially, fork freely</li>
+      </ul>
+      <a class="btn ghost" href="https://github.com/mangryung0404/multi-agent-orchestration-kit">View on GitHub</a>
+    </div>
+    <div class="card">
+      <h3>The Playbook</h3>
+      <div class="price">$19 <span class="was">$29 after launch</span></div>
+      <ul>
+        <li>9 chapters + 2 appendices, ~14,000 words</li>
+        <li>2 complete worked examples</li>
+        <li>7 operational checklists</li>
+        <li>1.x updates included</li>
+      </ul>
+      <a class="btn primary" href="https://mangryung0404.gumroad.com/l/orchestration-playbook">Buy on Gumroad</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>FAQ</h2>
+  <div class="qa"><b>Is this a framework or library?</b>No. Markdown templates and operating rules. There is nothing to install, which is also why it survives vendor updates.</div>
+  <div class="qa"><b>Do I need multiple paid subscriptions?</b>No. The pattern works with one orchestrator and a single worker; roles matter more than headcount. Multi-vendor makes the critic sharper (cross-vendor review catches what same-model review agrees with), but it's optional.</div>
+  <div class="qa"><b>Why not a vector store / memory MCP?</b>For task-scoped orchestration state, files are readable by every tool including you, diffable, git-versioned, and crash-proof. Nothing else has all four.</div>
+  <div class="qa"><b>Who wrote this?</b>A solo builder running Claude Code as orchestrator over Codex, Gemini and a local model, daily, in public. The playbook's failure-modes chapter is my own incident list, generalized.</div>
+  <div class="qa"><b>Refunds?</b>If it's not useful, reply through Gumroad within 14 days and I'll refund it. Reading it costs you an hour; being wrong about it shouldn't cost you $19.</div>
+</section>
+
+<footer>
+  <p>Built in public by <a href="https://x.com/mangryung0404">@mangryung0404</a> · <a href="https://github.com/mangryung0404/multi-agent-orchestration-kit">GitHub</a> · MIT-licensed templates</p>
+</footer>
+
+</div>
+</body>
+</html>

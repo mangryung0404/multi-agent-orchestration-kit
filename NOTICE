@@ -1,0 +1,9 @@
+Multi-Agent Orchestration Kit
+Copyright (c) 2026 mangryung0404
+
+The "Worker Conduct Rules" block in templates/worker-brief.md adapts ideas
+from multica-ai/andrej-karpathy-skills (MIT License):
+https://github.com/multica-ai/andrej-karpathy-skills
+
+All other templates and documentation are original work, generalized from a
+private multi-agent orchestration system operated by the author.
