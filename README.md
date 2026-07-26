@@ -62,7 +62,7 @@ The templates are free and always will be. The **Multi-Agent Orchestration Playb
 - **Two complete worked examples** with the key files at every step: a three-worker feature build, and a cold-session recovery of a stalled task.
 - **Two appendices that make it concrete**: complete examples of every system file the book mandates (rules file, entry pointers, invariants check, skills index), and the wiring: actual per-vendor worker invocations plus a hang-triage table.
 
-**[Get the Playbook on Gumroad →](https://mangryung0404.gumroad.com/l/orchestration-playbook)** (launch price $19)
+**[Get the Playbook on Gumroad →](https://mangryung.gumroad.com/l/orchestration-playbook)** (launch price $19)
 
 ## FAQ
 

@@ -1,6 +1,6 @@
 # The Method in Ten Minutes
 
-This is the short version of how the kit works. The full operating manual, with the collaboration triggers, the deliberation tiers, the cold-session recovery protocol, and two complete worked examples, is in [the Playbook](https://mangryung0404.gumroad.com/l/orchestration-playbook).
+This is the short version of how the kit works. The full operating manual, with the collaboration triggers, the deliberation tiers, the cold-session recovery protocol, and two complete worked examples, is in [the Playbook](https://mangryung.gumroad.com/l/orchestration-playbook).
 
 ## The problem
 
@@ -62,4 +62,4 @@ The templates get you the structure. The Playbook is the operating manual for th
 - **Degraded operation.** What to do when a worker is down: fallback ordering, when a cheaper model is acceptable, when to reroute across vendors, and how to mark outputs produced in degraded mode.
 - **Two worked examples.** A three-worker feature build end to end, and a cold-session recovery of a stalled task, both with the actual folder contents at each step.
 
-[Get the Playbook →](https://mangryung0404.gumroad.com/l/orchestration-playbook)
+[Get the Playbook →](https://mangryung.gumroad.com/l/orchestration-playbook)
